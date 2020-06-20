@@ -15,4 +15,15 @@ module.exports = merge(prodConfig, {
       template: './public/index.html',
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.(epub|png|jpe?g|gif)$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]',
+        },
+      },
+    ],
+  },
 })
