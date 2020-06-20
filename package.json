@@ -1,0 +1,16 @@
+{
+  "name": "react-reader",
+  "version": "0.0.1",
+  "description": "This package help viewing ebook files in ReactJs app",
+  "main": "src/index.ts",
+  "repository": "git@github.com:ant066/react-reader.git",
+  "author": "ant",
+  "license": "MIT",
+  "private": null,
+  "devDependencies": {
+    "html-webpack-plugin": "^4.3.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
