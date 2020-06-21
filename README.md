@@ -1,6 +1,6 @@
 # React Epubjs v0.0.1
 
-Use this library: https://github.com/futurepress/epub.js
+Use epub.js in this package: https://github.com/futurepress/epub.js
 
 ## Getting Started
 
