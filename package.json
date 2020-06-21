@@ -18,8 +18,12 @@
     "@types/react-dom": "^16.9.8",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.6.0",
+    "epubjs": "^0.3.87",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-swipeable": "^5.5.1",
     "sass": "^1.26.8",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.1",
@@ -36,11 +40,6 @@
     "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline",
     "dev": "webpack-dev-server --open --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.js"
-  },
-  "dependencies": {
-    "epubjs": "^0.3.87",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
   },
   "files": [
     "package.json",
