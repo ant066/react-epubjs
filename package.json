@@ -1,6 +1,6 @@
 {
   "name": "epubjs-react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "This package help viewing ebook files in ReactJs app",
   "main": "dist/main.js",
   "repository": "git@github.com:ant066/react-reader.git",
@@ -45,7 +45,7 @@
   },
   "files": [
     "package.json",
-    "/dist",
+    "/dist/main.js",
     "README.md"
   ]
 }
