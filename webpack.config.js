@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
-    library: 'react-epub-reader',
+    library: 'react-epubjs-beta',
     libraryTarget: 'umd',
   },
   resolve: {
