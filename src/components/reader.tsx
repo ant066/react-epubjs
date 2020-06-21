@@ -5,21 +5,36 @@ import Navigator from './navigator'
 import More from './more'
 import Loader from './loader'
 
-export const Reader: React.FC<{ url: any; size: string }> = ({ url, size }) => {
+interface ReaderProps {
+  url: any
+  fontSize?: string
+  fontFamily?: string
+  page?: number
+  onLoad?: (rendition?: Rendition) => void
+  onNext?: (rendition?: Rendition) => void
+  onPrev?: (rendition?: Rendition) => void
+}
+
+export const Reader: React.FC<ReaderProps> = ({ url, fontSize, fontFamily, onLoad, onNext, onPrev }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [rendition, setRendition] = useState<Rendition | null>(null)
   const [isMoreShow, setIsMoreShow] = useState<boolean>(false)
 
   useEffect(() => {
-    const domElement = ref.current
-    if (!domElement) return
+    const el = ref.current
+    if (!el) return
     const ebook = ePub(url)
-
-    const rendition = ebook.renderTo(domElement, { flow: 'paginated', width: '100%', height: '100%' })
-    rendition.themes.fontSize(size)
-    rendition.display()
-    setRendition(rendition)
+    console.log(ebook)
+    const rendition = ebook.renderTo(el, { flow: 'paginated', width: '100%', height: '100%' })
+    onReaderLoad(rendition)
   }, [])
+
+  const onReaderLoad = (rendition: Rendition) => {
+    if (!rendition) return
+    setRendition(rendition)
+    rendition.display()
+    onLoad && onLoad(rendition)
+  }
 
   const handleShowMore = (): void => setIsMoreShow(true)
   const handleHideMore = (): void => setIsMoreShow(false)
@@ -28,10 +43,10 @@ export const Reader: React.FC<{ url: any; size: string }> = ({ url, size }) => {
     <div className="wrapper">
       {!rendition && <Loader />}
 
-      <Navigator rendition={rendition} handleShowMore={handleShowMore} visible={!isMoreShow} />
-      <More rendition={rendition} visible={isMoreShow} handleHideMore={handleHideMore} />
+      <Navigator rendition={rendition} handleShowMore={handleShowMore} visible={true} onNext={onNext} onPrev={onPrev} />
+      {/* <More rendition={rendition} visible={isMoreShow} handleHideMore={handleHideMore} /> */}
 
-      <div className="reader" ref={ref}></div>
+      <div className="reader" ref={ref} />
     </div>
   )
 }
