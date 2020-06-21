@@ -40,7 +40,8 @@
   "dependencies": {
     "epubjs": "^0.3.87",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-swipeable": "^5.5.1"
   },
   "files": [
     "package.json",

@@ -4,6 +4,7 @@ import ePub, { Rendition } from 'epubjs'
 import Navigator from './navigator'
 import More from './more'
 import Loader from './loader'
+import { Swipeable, EventData } from 'react-swipeable'
 
 interface ReaderProps {
   url: any
@@ -24,7 +25,7 @@ export const Reader: React.FC<ReaderProps> = ({ url, fontSize, fontFamily, onLoa
     const el = ref.current
     if (!el) return
     const ebook = ePub(url)
-    console.log(ebook)
+
     const rendition = ebook.renderTo(el, { flow: 'paginated', width: '100%', height: '100%' })
     onReaderLoad(rendition)
   }, [])
@@ -39,15 +40,38 @@ export const Reader: React.FC<ReaderProps> = ({ url, fontSize, fontFamily, onLoa
   const handleShowMore = (): void => setIsMoreShow(true)
   const handleHideMore = (): void => setIsMoreShow(false)
 
+  const handleNext = () => {
+    if (!rendition) return
+    rendition.next()
+    onNext && onNext(rendition)
+  }
+
+  const handlePrev = () => {
+    if (!rendition) return
+    rendition.prev()
+    onPrev && onPrev(rendition)
+  }
+
+  const handleSwipe = (eventData: EventData) => {
+    const { dir } = eventData
+    if (dir === 'Left') handleNext()
+    if (dir === 'Right') handlePrev()
+  }
+
   return (
-    <div className="wrapper">
+    <Swipeable onSwiped={handleSwipe} className="wrapper">
       {!rendition && <Loader />}
 
-      <Navigator rendition={rendition} handleShowMore={handleShowMore} visible={true} onNext={onNext} onPrev={onPrev} />
+      <Navigator
+        rendition={rendition}
+        handleShowMore={handleShowMore}
+        visible={true}
+        handleNext={handleNext}
+        handlePrev={handlePrev}
+      />
       {/* <More rendition={rendition} visible={isMoreShow} handleHideMore={handleHideMore} /> */}
-
       <div className="reader" ref={ref} />
-    </div>
+    </Swipeable>
   )
 }
 

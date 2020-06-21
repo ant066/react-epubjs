@@ -6,23 +6,11 @@ interface NavigatorProps {
   rendition: Rendition | null
   handleShowMore: () => void
   visible: boolean
-  onNext?: (rendition?: Rendition) => void
-  onPrev?: (rendition?: Rendition) => void
+  handleNext?: () => void
+  handlePrev?: () => void
 }
 
-export const Navigator: React.FC<NavigatorProps> = ({ rendition, handleShowMore, visible, onNext, onPrev }) => {
-  const handleNext = () => {
-    if (!rendition) return
-    rendition.next()
-    onNext && onNext(rendition)
-  }
-
-  const handlePrev = () => {
-    if (!rendition) return
-    rendition.prev()
-    onPrev && onPrev(rendition)
-  }
-
+export const Navigator: React.FC<NavigatorProps> = ({ rendition, handleShowMore, visible, handleNext, handlePrev }) => {
   if (!visible) return null
   return (
     <div className="navigator">
