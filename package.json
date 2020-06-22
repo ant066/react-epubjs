@@ -1,5 +1,5 @@
 {
-  "name": "react-epubjs-beta",
+  "name": "react-epubjs",
   "version": "0.0.3",
   "description": "This package help viewing ebook files in ReactJs app",
   "main": "dist/main.js",
@@ -34,10 +34,6 @@
     "webpack-merge": "^4.2.2"
   },
   "scripts": {
-    "type-check": "tsc --noEmit",
-    "type-check:watch": "npm run type-check -- --watch",
-    "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline",
     "dev": "webpack-dev-server --open --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.js"
   },
