@@ -1,6 +1,6 @@
 {
   "name": "react-epubjs",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "dist/bundle.js",
   "author": "ant066",
   "license": "MIT",
@@ -36,9 +36,10 @@
     "webpack-merge": "^4.2.2"
   },
   "peerDependencies": {
-    "epubjs": "^0.3.87",
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "epubjs": "^0.3.87"
+  }
 }
