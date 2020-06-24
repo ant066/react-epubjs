@@ -1,16 +1,16 @@
 # React Epubjs v0.0.1
 
-Use this library: https://github.com/futurepress/epub.js
+View epub file in ReactJs application using epub.js
 
 ## Getting Started
 
-```js
+```tsx
 npm i react-epubjs
 ```
 
 or
 
-```js
+```tsx
 yarn add react-epubjs
 ```
 
@@ -35,3 +35,13 @@ import Reader from 'react-epubjs'
 <Reader src={Book} />
 <Reader src="https://abc.com/book.epub" />
 ```
+
+### Direction
+
+- Support click on left to back to prev page
+- Support click on right to next page
+- Also support swipe to switch page
+
+### More feature in feature
+
+Create new issue here: [https://github.com/ant066/react-epubjs/issues](https://github.com/ant066/react-epubjs/issues)
