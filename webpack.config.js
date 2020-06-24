@@ -1,35 +1,31 @@
-var path = require('path')
+const path = require("path");
 
 module.exports = {
-  mode: 'production',
-  entry: './src/index',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js',
-    library: 'react-epubjs',
-    libraryTarget: 'umd',
-  },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json'],
+    extensions: [".js", ".jsx", ".tsx", ".ts"],
+  },
+  output: {
+    path: path.join(__dirname, "dist"),
+    filename: "bundle.js",
   },
   module: {
     rules: [
       {
-        test: /\.(ts|js)x?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
+        test: /\.(js|jsx|ts|tsx)$/,
+        use: "babel-loader",
+        exclude: /(node_modules|bower_components)/,
       },
       {
         test: /\.s[ac]ss$/i,
         use: [
           // Creates `style` nodes from JS strings
-          'style-loader',
+          "style-loader",
           // Translates CSS into CommonJS
-          'css-loader',
+          "css-loader",
           // Compiles Sass to CSS
-          'sass-loader',
+          "sass-loader",
         ],
       },
     ],
   },
-}
+};

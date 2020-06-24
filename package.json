@@ -1,45 +1,44 @@
 {
   "name": "react-epubjs",
-  "version": "0.0.4",
-  "description": "This package help viewing ebook files in ReactJs app",
-  "main": "dist/main.js",
-  "repository": "git@github.com:ant066/react-epubjs.git",
-  "author": "ant",
+  "version": "0.0.0",
+  "main": "dist/bundle.js",
+  "author": "ant066",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "dev": "webpack-dev-server --open --config webpack.config.dev.js",
+    "build": "webpack --mode production --config webpack.config.prod.js",
+    "deploy": "gh-pages -d dist",
+    "publish-demo": "npm run build && npm run deploy"
+  },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
     "@babel/core": "^7.10.3",
-    "@babel/plugin-proposal-class-properties": "^7.10.1",
     "@babel/preset-env": "^7.10.3",
     "@babel/preset-react": "^7.10.1",
     "@babel/preset-typescript": "^7.10.1",
-    "@types/react": "^16.9.38",
-    "@types/react-dom": "^16.9.8",
-    "babel-loader": "^8.1.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^7.0.0-0",
+    "babel-loader": "^7.1.4",
     "css-loader": "^3.6.0",
     "epubjs": "^0.3.87",
     "file-loader": "^6.0.0",
+    "gulp-babel": "^8.0.0",
     "html-webpack-plugin": "^4.3.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
     "react-swipeable": "^5.5.1",
-    "sass": "^1.26.8",
+    "sass": "^1.26.9",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.1",
-    "typescript": "^3.9.5",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2"
   },
-  "scripts": {
-    "dev": "webpack-dev-server --open --config webpack.config.dev.js",
-    "build": "webpack --config webpack.config.js"
+  "peerDependencies": {
+    "epubjs": "^0.3.87",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
   },
-  "files": [
-    "package.json",
-    "/dist/main.js",
-    "README.md"
-  ]
+  "dependencies": {}
 }

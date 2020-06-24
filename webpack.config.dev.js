@@ -1,29 +1,28 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const path = require('path')
-const merge = require('webpack-merge')
-const prodConfig = require('./webpack.config.js')
+var merge = require("webpack-merge");
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const commonConfig = require("./webpack.config");
 
-module.exports = merge(prodConfig, {
-  mode: 'development',
-  entry: './demo/app.jsx',
-  devtool: 'inline-source-map',
+const htmlWebpackPlugin = new HtmlWebpackPlugin({
+  template: path.join(__dirname, "public/index.html"),
+  filename: "./index.html",
+});
+
+module.exports = merge(commonConfig, {
+  entry: path.join(__dirname, "src/demo"),
+  plugins: [htmlWebpackPlugin],
   devServer: {
-    contentBase: './dist',
+    port: 3000,
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-    }),
-  ],
   module: {
     rules: [
       {
         test: /\.(epub|png|jpe?g|gif)$/i,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: '[path][name].[ext]',
+          name: "[path][name].[ext]",
         },
       },
     ],
   },
-})
+});
