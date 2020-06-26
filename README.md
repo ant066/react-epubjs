@@ -32,8 +32,8 @@ interface ReaderProps {
 import Book from './book.epub'
 import Reader from 'react-epubjs'
 
-<Reader src={Book} />
-<Reader src="https://abc.com/book.epub" />
+<Reader url={Book} />
+<Reader url="https://abc.com/book.epub" />
 ```
 
 ### Direction
