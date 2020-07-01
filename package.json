@@ -48,5 +48,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ant066/react-epubjs.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }
