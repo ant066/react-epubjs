@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Reader from '../dist/bundle'
+import Reader from './'
 import book from './assets/book.epub'
 
 const root = document.getElementById('root')
