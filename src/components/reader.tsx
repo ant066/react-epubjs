@@ -10,13 +10,26 @@ interface ReaderProps {
   url: any
   fontSize?: string
   fontFamily?: string
-  page?: number
+  fontColor?: string
+  className: string
+  showCurrentPage: boolean | 'buttom' | 'top'
+
   onLoad?: (rendition?: Rendition) => void
   onNext?: (rendition?: Rendition) => void
   onPrev?: (rendition?: Rendition) => void
 }
 
-export const Reader: React.FC<ReaderProps> = ({ url, fontSize, fontFamily, onLoad, onNext, onPrev }) => {
+export const Reader: React.FC<ReaderProps> = ({
+  url,
+  fontSize,
+  fontFamily,
+  fontColor,
+  onLoad,
+  onNext,
+  onPrev,
+  showCurrentPage = true,
+  className = '',
+}) => {
   const ref = useRef<HTMLDivElement>(null)
   const [rendition, setRendition] = useState<Rendition | null>(null)
   const [isMoreShow, setIsMoreShow] = useState<boolean>(false)
@@ -34,6 +47,11 @@ export const Reader: React.FC<ReaderProps> = ({ url, fontSize, fontFamily, onLoa
     if (!rendition) return
     setRendition(rendition)
     rendition.display()
+
+    fontSize && rendition.themes.default({ p: { 'font-size': `${fontSize} !important` } })
+    fontColor && rendition.themes.default({ p: { color: `${fontColor} !important` } })
+    fontFamily && rendition.themes.default({ p: { fontFamily: `${fontFamily} !important` } })
+
     onLoad && onLoad(rendition)
   }
 
@@ -68,9 +86,10 @@ export const Reader: React.FC<ReaderProps> = ({ url, fontSize, fontFamily, onLoa
         visible={true}
         handleNext={handleNext}
         handlePrev={handlePrev}
+        showCurrentPage={showCurrentPage}
       />
       {/* <More rendition={rendition} visible={isMoreShow} handleHideMore={handleHideMore} /> */}
-      <div className="reader" ref={ref} />
+      <div className={`reader ${className}`} ref={ref} />
     </Swipeable>
   )
 }

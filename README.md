@@ -19,9 +19,12 @@ Create new React Epubjs
 ```tsx
 interface ReaderProps {
   url: any
-  //   fontSize?: string
-  //   fontFamily?: string
-  //   page?: number
+  fontSize?: string
+  fontFamily?: string
+  fontColor?: string
+  className: string
+  showCurrentPage: boolean | 'buttom' | 'top'
+
   onLoad?: (rendition?: Rendition) => void
   onNext?: (rendition?: Rendition) => void
   onPrev?: (rendition?: Rendition) => void

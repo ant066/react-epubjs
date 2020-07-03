@@ -23,4 +23,19 @@
     opacity: 0.3;
     float: left;
   }
+
+  .page-number {
+    position: absolute;
+    width: 100%;
+    background: #c0c0c02e;
+    padding: 5px 15px;
+    color: #888;
+    text-align: center;
+    &.top {
+      top: 0;
+    }
+    &.bottom {
+      bottom: 0;
+    }
+  }
 }
