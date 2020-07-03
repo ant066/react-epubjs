@@ -10,7 +10,7 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 
 module.exports = merge(devConfig, {
   output: {
-    path: path.join(__dirname, 'demo-dist'),
+    path: path.join(__dirname, 'docs'),
     filename: 'bundle.js',
     library: 'react-epubjs',
     libraryTarget: 'umd',
