@@ -2,6 +2,8 @@
 
 View epub file in ReactJs application using epub.js
 
+See a demo at: [https://ant066.github.io/react-epubjs/](https://ant066.github.io/react-epubjs/)
+
 ## Getting Started
 
 ```tsx
