@@ -1,4 +1,4 @@
-# React Epubjs v0.0.1
+# React Epubjs
 
 View epub file in ReactJs application using epub.js
 
