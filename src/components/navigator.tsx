@@ -40,7 +40,6 @@ export const Navigator: React.FC<NavigatorProps> = ({
   }
 
   useEffect(onRelocated, [rendition])
-  console.log(showCurrentPage)
   return (
     <div className="navigator">
       <div className="more-info-area" onClick={handleShowMore}></div>
