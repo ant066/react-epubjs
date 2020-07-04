@@ -27,25 +27,38 @@ interface ReaderProps {
   className: string
   showCurrentPage: boolean | 'buttom' | 'top'
 
+  cfi: string
+
   onLoad?: (rendition?: Rendition) => void
   onNext?: (rendition?: Rendition) => void
   onPrev?: (rendition?: Rendition) => void
+  onRelocated?: (location?: Location) => void
 }
 ```
 
 ```tsx
-import Book from './book.epub'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import Reader from 'react-epubjs'
+import book from './assets/book.epub'
 
-<Reader url={Book} />
-<Reader url="https://abc.com/book.epub" />
+const root = document.getElementById('root')
+
+const onRelocated = (location) => {
+  //WILL SAVE THE CURRENT LOCATION TO localStorage
+  const cfi = location.start.cfi
+  localStorage.setItem('cfi', cfi)
+}
+
+const EpubView = () => {
+  const cfi = localStorage.getItem('cfi')
+
+  //READER must be wrapper by an element with height
+  return <Reader url={book} onRelocated={onRelocated} cfi={cfi} />
+}
+
+ReactDOM.render(<EpubView />, root)
 ```
-
-### Direction
-
-- Support click on left to back to prev page
-- Support click on right to next page
-- Also support swipe to switch page
 
 ### More feature in feature
 
