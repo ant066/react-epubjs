@@ -50,3 +50,5 @@ import Reader from 'react-epubjs'
 ### More feature in feature
 
 Create new issue here: [https://github.com/ant066/react-epubjs/issues](https://github.com/ant066/react-epubjs/issues)
+
+Track the progress here: [Kanban](https://github.com/ant066/react-epubjs/projects/1?fullscreen=true)
