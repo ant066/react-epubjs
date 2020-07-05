@@ -11,6 +11,7 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 module.exports = merge(commonConfig, {
   entry: path.join(__dirname, 'src/demo'),
   plugins: [htmlWebpackPlugin],
+  devtool: 'inline-source-map',
   devServer: {
     port: 3000,
   },

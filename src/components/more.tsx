@@ -1,25 +1,25 @@
 import '../assets/more.scss'
 import React from 'react'
 import { Rendition } from 'epubjs'
+import Chapters from './chapters'
 
 interface MoreProps {
+  info: any
   rendition: Rendition | null
   visible: boolean
   handleHideMore: () => void
+  renderChapters?: (tocs) => React.ReactNode
 }
 
-export const More: React.FC<MoreProps> = ({ rendition, visible, handleHideMore }) => {
+export const More: React.FC<MoreProps> = ({ info, rendition, visible, handleHideMore, renderChapters }) => {
   if (!visible) return null
-
-  const setFontSize = (percent: number) => {
-    percent = percent > 200 ? 150 : percent
-    rendition?.themes.fontSize(`${percent}%`)
-  }
-
+  const { title } = info
   return (
-    <div className="more">
-      <div className="setting">{/* <button onClick={() => setFontSize(150)}>SIZE</button> */}</div>
-      <div className="cancel" onClick={handleHideMore}></div>
+    <div className="more" onClick={handleHideMore}>
+      <div className="info">
+        <div className="title">{title}</div>
+      </div>
+      <Chapters rendition={rendition} renderChapters={renderChapters} />
     </div>
   )
 }

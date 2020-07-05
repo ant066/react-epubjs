@@ -24,15 +24,16 @@ interface ReaderProps {
   fontSize?: string
   fontFamily?: string
   fontColor?: string
-  className: string
-  showCurrentPage: boolean | 'buttom' | 'top'
+  className?: string
 
-  cfi: string
+  cfi?: string
 
   onLoad?: (rendition?: Rendition) => void
   onNext?: (rendition?: Rendition) => void
   onPrev?: (rendition?: Rendition) => void
   onRelocated?: (location?: Location) => void
+
+  renderChapters?: (tocs) => React.ReactNode
 }
 ```
 
@@ -45,22 +46,36 @@ import book from './assets/book.epub'
 const root = document.getElementById('root')
 
 const onRelocated = (location) => {
-  //WILL SAVE THE CURRENT LOCATION TO localStorage
+  // save current cfi to localStorage
   const cfi = location.start.cfi
   localStorage.setItem('cfi', cfi)
 }
 
 const EpubView = () => {
+  // load cfi from localStorage
   const cfi = localStorage.getItem('cfi')
 
-  //READER must be wrapper by an element with height
+  // must be wrap by an element with height
   return <Reader url={book} onRelocated={onRelocated} cfi={cfi} />
 }
 
 ReactDOM.render(<EpubView />, root)
 ```
 
-### More feature in feature
+### Custom chapters list
+
+```tsx
+const renderChapters = (tocs, rendition) => {
+  const changeChapters = (toc) => {
+    rendition.display(toc.href)
+  }
+  return tocs.map((toc) => <div onClick={() => changeChapters(toc)}>{toc.href}</div>)
+}
+
+return <Reader url={book} onRelocated={onRelocated} cfi={cfi} renderChapters={renderChapters} />
+```
+
+### More feature in future
 
 Create new issue here: [https://github.com/ant066/react-epubjs/issues](https://github.com/ant066/react-epubjs/issues)
 

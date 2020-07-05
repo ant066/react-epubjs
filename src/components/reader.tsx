@@ -20,6 +20,8 @@ interface ReaderProps {
   onNext?: (rendition?: Rendition) => void
   onPrev?: (rendition?: Rendition) => void
   onRelocated?: (location?: Location) => void
+
+  renderChapters?: (tocs) => React.ReactNode
 }
 
 export const Reader: React.FC<ReaderProps> = ({
@@ -34,11 +36,12 @@ export const Reader: React.FC<ReaderProps> = ({
   showCurrentPage = true,
   className = '',
   cfi,
+  renderChapters,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
-  const [book, setBook] = useState<Book | null>(null)
   const [rendition, setRendition] = useState<Rendition | null>(null)
   const [isMoreShow, setIsMoreShow] = useState<boolean>(false)
+  const [info, setInfo] = useState()
 
   useEffect(() => {
     const el = ref.current
@@ -51,16 +54,22 @@ export const Reader: React.FC<ReaderProps> = ({
   const onReaderLoad = (ebook: Book, rendition: Rendition) => {
     if (!rendition) return
     setRendition(rendition)
-    setBook(ebook)
 
     cfi ? rendition.display(cfi) : rendition.display()
-
-    fontSize && rendition.themes.default({ p: { 'font-size': `${fontSize} !important` } })
-    fontColor && rendition.themes.default({ p: { color: `${fontColor} !important` } })
-    fontFamily && rendition.themes.default({ p: { fontFamily: `${fontFamily} !important` } })
+    setupStyles()
 
     onLoad && onLoad(rendition)
     onRelocated && rendition.on('relocated', handleRelocated)
+    ebook.ready.then((values) => {
+      const [, , info] = values
+      setInfo(info)
+    })
+  }
+
+  const setupStyles = () => {
+    fontSize && rendition.themes.default({ p: { 'font-size': `${fontSize} !important` } })
+    fontColor && rendition.themes.default({ p: { color: `${fontColor} !important` } })
+    fontFamily && rendition.themes.default({ p: { fontFamily: `${fontFamily} !important` } })
   }
 
   const handleRelocated = (location: Location): void => {
@@ -87,11 +96,9 @@ export const Reader: React.FC<ReaderProps> = ({
     if (dir === 'Left') handleNext()
     if (dir === 'Right') handlePrev()
   }
-
   return (
     <Swipeable onSwiped={handleSwipe} className="wrapper">
       {!rendition && <Loader />}
-
       <Navigator
         rendition={rendition}
         handleShowMore={handleShowMore}
@@ -100,7 +107,13 @@ export const Reader: React.FC<ReaderProps> = ({
         handlePrev={handlePrev}
         showCurrentPage={showCurrentPage}
       />
-      {/* <More rendition={rendition} visible={isMoreShow} handleHideMore={handleHideMore} /> */}
+      <More
+        info={info}
+        rendition={rendition}
+        visible={isMoreShow}
+        handleHideMore={handleHideMore}
+        renderChapters={renderChapters}
+      />
       <div className={`reader ${className}`} ref={ref} />
     </Swipeable>
   )
