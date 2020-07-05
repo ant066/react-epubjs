@@ -56,17 +56,18 @@ export const Reader: React.FC<ReaderProps> = ({
     setRendition(rendition)
 
     cfi ? rendition.display(cfi) : rendition.display()
-    setupStyles()
 
+    setupStyles(rendition)
     onLoad && onLoad(rendition)
     onRelocated && rendition.on('relocated', handleRelocated)
+
     ebook.ready.then((values) => {
       const [, , info] = values
       setInfo(info)
     })
   }
 
-  const setupStyles = () => {
+  const setupStyles = (rendition) => {
     fontSize && rendition.themes.default({ p: { 'font-size': `${fontSize} !important` } })
     fontColor && rendition.themes.default({ p: { color: `${fontColor} !important` } })
     fontFamily && rendition.themes.default({ p: { fontFamily: `${fontFamily} !important` } })
