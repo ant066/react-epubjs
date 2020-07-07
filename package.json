@@ -1,6 +1,6 @@
 {
   "name": "react-epubjs",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "main": "dist/bundle.js",
   "author": "ant066",
   "license": "MIT",
