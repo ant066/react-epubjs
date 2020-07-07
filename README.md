@@ -24,9 +24,12 @@ interface ReaderProps {
   fontSize?: string
   fontFamily?: string
   fontColor?: string
-  className?: string
+  className: string
 
-  cfi?: string
+  showPercentage?: boolean // default is true
+  percentString?: string // default is '$percent of this book'
+
+  cfi: string
 
   onLoad?: (rendition?: Rendition) => void
   onNext?: (rendition?: Rendition) => void
@@ -60,19 +63,6 @@ const EpubView = () => {
 }
 
 ReactDOM.render(<EpubView />, root)
-```
-
-### Custom chapters list
-
-```tsx
-const renderChapters = (tocs, rendition) => {
-  const changeChapters = (toc) => {
-    rendition.display(toc.href)
-  }
-  return tocs.map((toc) => <div onClick={() => changeChapters(toc)}>{toc.href}</div>)
-}
-
-return <Reader url={book} onRelocated={onRelocated} cfi={cfi} renderChapters={renderChapters} />
 ```
 
 ### More feature in future

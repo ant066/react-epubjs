@@ -1,6 +1,6 @@
 import '../assets/reader.scss'
 import React, { useEffect, useRef, useState } from 'react'
-import ePub, { Rendition, Location, Book } from 'epubjs'
+import ePub, { Rendition, Location } from 'epubjs'
 import Navigator from './navigator'
 import More from './more'
 import Loader from './loader'
@@ -12,7 +12,9 @@ interface ReaderProps {
   fontFamily?: string
   fontColor?: string
   className: string
-  showCurrentPage: boolean | 'buttom' | 'top'
+
+  showPercentage: boolean
+  percentString: string
 
   cfi: string
 
@@ -33,7 +35,8 @@ export const Reader: React.FC<ReaderProps> = ({
   onNext,
   onPrev,
   onRelocated,
-  showCurrentPage = true,
+  showPercentage = true,
+  percentString,
   className = '',
   cfi,
   renderChapters,
@@ -42,6 +45,7 @@ export const Reader: React.FC<ReaderProps> = ({
   const [rendition, setRendition] = useState<Rendition | null>(null)
   const [isMoreShow, setIsMoreShow] = useState<boolean>(false)
   const [info, setInfo] = useState()
+  const [percent, setPercent] = useState(0)
 
   useEffect(() => {
     const el = ref.current
@@ -51,19 +55,22 @@ export const Reader: React.FC<ReaderProps> = ({
     onReaderLoad(ebook, rendition)
   }, [])
 
-  const onReaderLoad = (ebook: Book, rendition: Rendition) => {
+  const onReaderLoad = (ebook, rendition: Rendition) => {
     if (!rendition) return
     setRendition(rendition)
 
     cfi ? rendition.display(cfi) : rendition.display()
 
     setupStyles(rendition)
-    onLoad && onLoad(rendition)
-    onRelocated && rendition.on('relocated', handleRelocated)
 
-    ebook.ready.then((values) => {
-      const [, , info] = values
-      setInfo(info)
+    ebook.ready.then(async () => {
+      const { package: { metadata = {} } = {} } = ebook
+      setInfo(metadata)
+
+      await ebook.locations.generate(1600)
+
+      onLoad && onLoad(rendition)
+      onRelocated && rendition.on('relocated', handleRelocated(ebook))
     })
   }
 
@@ -73,8 +80,11 @@ export const Reader: React.FC<ReaderProps> = ({
     fontFamily && rendition.themes.default({ p: { fontFamily: `${fontFamily} !important` } })
   }
 
-  const handleRelocated = (location: Location): void => {
+  const handleRelocated = (ebook) => (location: Location): void => {
     onRelocated(location)
+
+    const percent = ebook.locations.percentageFromCfi(location.start.cfi)
+    setPercent(percent)
   }
 
   const handleShowMore = (): void => setIsMoreShow(true)
@@ -97,16 +107,17 @@ export const Reader: React.FC<ReaderProps> = ({
     if (dir === 'Left') handleNext()
     if (dir === 'Right') handlePrev()
   }
+
   return (
-    <Swipeable onSwiped={handleSwipe} className="wrapper">
+    <Swipeable onSwiped={handleSwipe} className="react-epubjs">
       {!rendition && <Loader />}
       <Navigator
-        rendition={rendition}
         handleShowMore={handleShowMore}
         visible={true}
         handleNext={handleNext}
         handlePrev={handlePrev}
-        showCurrentPage={showCurrentPage}
+        percent={showPercentage ? percent : null}
+        percentString={percentString}
       />
       <More
         info={info}
@@ -115,7 +126,7 @@ export const Reader: React.FC<ReaderProps> = ({
         handleHideMore={handleHideMore}
         renderChapters={renderChapters}
       />
-      <div className={`reader ${className}`} ref={ref} />
+      <div className={`reader ${className} ${showPercentage ? 'pb-25' : ''}`} ref={ref} />
     </Swipeable>
   )
 }

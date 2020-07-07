@@ -1,9 +1,7 @@
 import '../assets/navigator.scss'
-import React, { useState, useEffect } from 'react'
-import { Rendition } from 'epubjs'
+import React from 'react'
 
 interface NavigatorProps {
-  rendition: Rendition | null
   handleShowMore: () => void
   visible: boolean
   handleNext?: () => void
@@ -12,20 +10,24 @@ interface NavigatorProps {
 }
 
 export const Navigator: React.FC<NavigatorProps> = ({
-  rendition,
   handleShowMore,
   visible,
   handleNext,
   handlePrev,
-  showCurrentPage,
+  percent,
+  percentString = '$percent of this book',
 }) => {
   if (!visible) return null
+
+  percent = Math.round(percent.toFixed(2) * 100)
+  const percentStr = percentString.replace('$percent', percent + '%')
 
   return (
     <div className="navigator">
       <div className="more-info-area" onClick={handleShowMore}></div>
       <div className="prev-area" onClick={handlePrev}></div>
       <div className="next-area" onClick={handleNext}></div>
+      {percent ? <div className="page-number">{percentStr}</div> : null}
     </div>
   )
 }
