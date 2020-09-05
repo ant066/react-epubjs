@@ -1,0 +1,16 @@
+{
+    "urls":[
+        {
+            "url":"https://github.com/request/request",
+            "time":20000
+        },
+        {
+            "url":"https://github.com/request/request/pulls",
+            "time":10000
+        },
+        {
+            "url":"https://github.com/request/request/pull/3339",
+            "time":10000
+        }
+    ]
+}
